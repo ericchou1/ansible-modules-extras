@@ -97,6 +97,14 @@ options:
 
 '''
 
+RETURN = '''
+changed:
+    description: A flag indicating if any change was made or not to the A10 device
+    returned: success
+    type: boolean
+    sample: True
+'''
+
 EXAMPLES = '''
 # Create a new server
 - a10_server: 
