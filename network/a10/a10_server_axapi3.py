@@ -57,7 +57,7 @@ options:
         required when C(state) is C(present).
     required: false
     default: null
-  action:
+  operation:
     description:
       - create, update or remove slb server
     required: false
