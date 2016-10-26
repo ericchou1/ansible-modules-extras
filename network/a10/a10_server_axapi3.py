@@ -29,21 +29,8 @@ short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices
 description:
     - Manage slb server objects on A10 Networks devices via aXAPIv3
 author: "Eric Chou (@ericchou) based on previous work by Mischa Peters (@mischapeters)"
+extends_documentation_fragment: a10
 options:
-  host:
-    description:
-      - hostname or ip of your A10 Networks device
-    required: true
-  username:
-    description:
-      - admin account of your A10 Networks device
-    required: true
-    aliases: ['user', 'admin']
-  password:
-    description:
-      - admin password of your A10 Networks device
-    required: true
-    aliases: ['pass', 'pwd']
   server_name:
     description:
       - slb server name
@@ -70,39 +57,24 @@ options:
         required when C(state) is C(present).
     required: false
     default: null
-  state:
+  action:
     description:
       - create, update or remove slb server
     required: false
     default: create
     choices: ['create', 'update', 'remove']
-  write_config:
-    description:
-      - If C(yes), any changes will cause a write of the running configuration
-        to non-volatile memory. This will save I(all) configuration changes,
-        including those that may have been made manually or through other modules,
-        so care should be taken when specifying C(yes).
-    required: false
-    version_added: 2.2
-    default: "no"
-    choices: ["yes", "no"]
   validate_certs:
     description:
       - If C(no), SSL certificates will not be validated. This should only be used
         on personally controlled devices using self-signed certificates.
     required: false
-    version_added: 2.2
     default: 'yes'
     choices: ['yes', 'no']
 
 '''
 
 RETURN = '''
-changed:
-    description: A flag indicating if any change was made or not to the A10 device
-    returned: success
-    type: boolean
-    sample: True
+#
 '''
 
 EXAMPLES = '''
@@ -116,7 +88,7 @@ EXAMPLES = '''
     validate_certs: false
     server_status: enable
     write_config: yes
-    state: create
+    operation: create
     server_ports:
       - port-number: 8080
         protocol: tcp
@@ -169,7 +141,7 @@ def main():
     argument_spec.update(url_argument_spec())
     argument_spec.update(
         dict(
-            state=dict(type='str', default='create', choices=['create', 'update', 'delete']),
+            operation=dict(type='str', default='create', choices=['create', 'update', 'delete']),
             server_name=dict(type='str', aliases=['server'], required=True),
             server_ip=dict(type='str', aliases=['ip', 'address'], required=True),
             server_status=dict(type='str', default='enable', aliases=['action'], choices=['enable', 'disable']),
@@ -185,7 +157,7 @@ def main():
     host = module.params['host']
     username = module.params['username']
     password = module.params['password']
-    state = module.params['state']
+    operation = module.params['operation']
     write_config = module.params['write_config']
     slb_server = module.params['server_name']
     slb_server_ip = module.params['server_ip']
@@ -236,7 +208,7 @@ def main():
             slb_server_exists = False
 
     changed = False
-    if state == 'create':
+    if operation == 'create':
         if slb_server_exists == False:
             result = axapi_call_v3(module, axapi_base_url+'slb/server/', method='POST', body=json.dumps(json_post), signature=signature)
             if axapi_failure(result):
@@ -250,7 +222,7 @@ def main():
             result = axapi_call_v3(module, axapi_base_url + 'slb/server/' + slb_server, method='GET', body='', signature=signature)
         else:
             result = slb_server_data
-    elif state == 'delete':
+    elif operation == 'delete':
         if slb_server_exists:
             result = axapi_call_v3(module, axapi_base_url + 'slb/server/' + slb_server, method='DELETE', body='', signature=signature)
             if axapi_failure(result):
@@ -258,7 +230,7 @@ def main():
             changed = True
         else:
             result = dict(msg="the server was not present")
-    elif state == 'update':
+    elif operation == 'update':
         if slb_server_exists:
             result = axapi_call_v3(module, axapi_base_url + 'slb/server/', method='PUT', body=json.dumps(json_post), signature=signature)
             if axapi_failure(result):
