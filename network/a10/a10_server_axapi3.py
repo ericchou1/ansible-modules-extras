@@ -27,24 +27,24 @@ module: a10_server_axapi3
 version_added: 2.3
 short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices
 description:
-    - Manage slb server objects on A10 Networks devices via aXAPIv3
+    - Manage SLB (Server Load Balancer) server objects on A10 Networks devices via aXAPIv3
 author: "Eric Chou (@ericchou) based on previous work by Mischa Peters (@mischapeters)"
 extends_documentation_fragment: a10
 options:
   server_name:
     description:
-      - slb server name
+      - SLB server name
     required: true
     aliases: ['server']
   server_ip:
     description:
-      - slb server IP address
+      - SLB server IPv4 address
     required: false
     default: null
     aliases: ['ip', 'address']
   server_status:
     description:
-      - slb virtual server status
+      - SLB virtual server status
     required: false
     default: enable
     aliases: ['action']
@@ -59,7 +59,7 @@ options:
     default: null
   operation:
     description:
-      - create, update or remove slb server
+      - Create, Update or Remove SLB server. For create and update operation, we use the IP address and server name specified in the POST message. For delete operation, we use the server name in the request URI.
     required: false
     default: create
     choices: ['create', 'update', 'remove']
@@ -192,7 +192,6 @@ def main():
         json_post['server-list'][0]['port-list'] = slb_server_ports
 
     if slb_server_status:
-        #json_post['server-list'][0]['action'] = axapi_enabled_disabled(slb_server_status)
         json_post['server-list'][0]['action'] = slb_server_status
 
     slb_server_data = axapi_call_v3(module, axapi_base_url+'slb/server/', method='GET', body='', signature=signature)
@@ -249,10 +248,14 @@ def main():
     axapi_call_v3(module, axapi_base_url + 'logoff/', method='POST', body='', signature=signature)
     module.exit_json(changed=changed, content=result)
 
-# standard ansible module imports
-from ansible.module_utils.basic import *
-from ansible.module_utils.urls import *
-from ansible.module_utils.a10 import *
+
+import json
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.urls import url_argument_spec
+from ansible.module_utils.a10 import axapi_call_v3, a10_argument_spec, axapi_authenticate_v3, axapi_failure
 
 
-main()
+if __name__ == '__main__':
+    main()
+
+
