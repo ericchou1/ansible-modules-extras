@@ -50,14 +50,14 @@ options:
     choices: ['enable', 'disable']
   server_ports:
     description:
-      - A list of ports to create for the server. Each list item should be a
-        dictionary which specifies the C(port:) and C(protocol:).
+      - A list of ports to create for the server. Each list item should be a dictionary which specifies the C(port:)
+        and C(protocol:).
     required: false
     default: null
   operation:
     description:
-      - Create, Update or Remove SLB server. For create and update operation, we use the IP address and
-      server name specified in the POST message. For delete operation, we use the server name in the request URI.
+      - Create, Update or Remove SLB server. For create and update operation, we use the IP address and server
+        name specified in the POST message. For delete operation, we use the server name in the request URI.
     required: false
     default: create
     choices: ['create', 'update', 'remove']
