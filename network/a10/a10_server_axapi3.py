@@ -27,24 +27,23 @@ module: a10_server_axapi3
 version_added: 2.3
 short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices
 description:
-    - Manage SLB (Server Load Balancer) server objects on A10 Networks devices via aXAPIv3
+    - Manage SLB (Server Load Balancer) server objects on A10 Networks devices via aXAPIv3.
 author: "Eric Chou (@ericchou) based on previous work by Mischa Peters (@mischapeters)"
 extends_documentation_fragment: a10
 options:
   server_name:
     description:
-      - SLB server name
+      - The SLB (Server Load Balancer) server name.
     required: true
     aliases: ['server']
   server_ip:
     description:
-      - SLB server IPv4 address
-    required: false
-    default: null
+      - The SLB (Server Load Balancer) server IPv4 address.
+    required: true
     aliases: ['ip', 'address']
   server_status:
     description:
-      - SLB virtual server status
+      - The SLB (Server Load Balancer) virtual server status.
     required: false
     default: enable
     aliases: ['action']
@@ -52,14 +51,13 @@ options:
   server_ports:
     description:
       - A list of ports to create for the server. Each list item should be a
-        dictionary which specifies the C(port:) and C(protocol:), but can also optionally
-        specify the C(status:). See the examples below for details. This parameter is
-        required when C(state) is C(present).
+        dictionary which specifies the C(port:) and C(protocol:).
     required: false
     default: null
   operation:
     description:
-      - Create, Update or Remove SLB server. For create and update operation, we use the IP address and server name specified in the POST message. For delete operation, we use the server name in the request URI.
+      - Create, Update or Remove SLB server. For create and update operation, we use the IP address and
+      server name specified in the POST message. For delete operation, we use the server name in the request URI.
     required: false
     default: create
     choices: ['create', 'update', 'remove']
@@ -257,5 +255,3 @@ from ansible.module_utils.a10 import axapi_call_v3, a10_argument_spec, axapi_aut
 
 if __name__ == '__main__':
     main()
-
-
