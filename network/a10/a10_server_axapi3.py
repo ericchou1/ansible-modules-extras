@@ -162,12 +162,6 @@ def main():
     slb_server_status = module.params['server_status']
     slb_server_ports = module.params['server_ports']
 
-    if slb_server is None:
-        module.fail_json(msg='server_name is required')
-
-    if slb_server_ip is None:
-        module.fail_json(msg='server ip is required')
-
     axapi_base_url = 'https://{}/axapi/v3/'.format(host)
     axapi_auth_url = axapi_base_url + 'auth/'
     signature = axapi_authenticate_v3(module, axapi_auth_url, username, password)
