@@ -260,9 +260,5 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import url_argument_spec
 from ansible.module_utils.a10 import axapi_call, a10_argument_spec, axapi_authenticate, axapi_failure, axapi_get_port_protocol, axapi_enabled_disabled
 
-<<<<<<< HEAD
-if __name__ == "__main__":
-=======
 if __name__ == '__main__':
->>>>>>> 291c0a294e8c18207a5cea14afc8d264267ace08
     main()
