@@ -202,15 +202,14 @@ class AnsibleCloudStackIPAddress(AnsibleCloudStack):
 
             poll_async = self.module.params.get('poll_async')
             if poll_async:
-                res = self.poll_job(res, 'ipaddress')
-            ip_address = res
+                ip_address = self.poll_job(res, 'ipaddress')
         return ip_address
 
 
     def disassociate_ip_address(self):
         ip_address = self.get_ip_address()
-        if ip_address is None:
-            return ip_address
+        if not ip_address:
+            return None
         if ip_address['isstaticnat']:
             self.module.fail_json(msg="IP address is allocated via static nat")
 

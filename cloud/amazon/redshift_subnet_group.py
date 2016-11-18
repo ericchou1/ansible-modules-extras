@@ -20,7 +20,7 @@ DOCUMENTATION = '''
 author:
   - "Jens Carl (@j-carl), Hothead Games Inc."
 module: redshift_subnet_group
-version_added: "2.1"
+version_added: "2.2"
 short_description: mange Redshift cluster subnet groups
 description:
   - Create, modifies, and deletes Redshift cluster subnet groups.
@@ -82,7 +82,7 @@ group:
         vpc_id:
             description: Id of the VPC where the subnet is located
             returned: success
-            type: stering
+            type: string
             sample: "vpc-aabb1122"
 '''
 
