@@ -3,7 +3,8 @@
 
 """
 Ansible module to manage A10 Networks slb server objects
-(c) 2014, Mischa Peters <mpeters@a10networks.com>
+(c) 2014, Mischa Peters <mpeters@a10networks.com>,
+2016, Eric Chou <ericc@a10networks.com>
 
 This file is part of Ansible
 
@@ -286,9 +287,11 @@ def main():
     axapi_call(module, session_url + '&method=session.close')
     module.exit_json(changed=changed, content=result)
 
-# standard ansible module imports
-from ansible.module_utils.basic import *
-from ansible.module_utils.urls import *
-from ansible.module_utils.a10 import *
+# ansible module imports
+import json
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.urls import url_argument_spec
+from ansible.module_utils.a10 import axapi_call, a10_argument_spec, axapi_authenticate, axapi_failure, axapi_get_port_protocol, axapi_enabled_disabled
 
-main()
+if __name__ == "__main__":
+    main()

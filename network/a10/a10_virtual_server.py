@@ -3,7 +3,8 @@
 
 """
 Ansible module to manage A10 Networks slb virtual server objects
-(c) 2014, Mischa Peters <mpeters@a10networks.com>
+(c) 2014, Mischa Peters <mpeters@a10networks.com>,
+Eric Chou <ericc@a10networks.com>
 
 This file is part of Ansible
 
@@ -289,9 +290,11 @@ def main():
     module.exit_json(changed=changed, content=result)
 
 # standard ansible module imports
-from ansible.module_utils.basic import *
-from ansible.module_utils.urls import *
-from ansible.module_utils.a10 import *
+import json
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.urls import url_argument_spec
+from ansible.module_utils.a10 import axapi_call, a10_argument_spec, axapi_authenticate, axapi_failure, axapi_enabled_disabled, axapi_get_vport_protocol
+
 if __name__ == '__main__':
     main()
 
