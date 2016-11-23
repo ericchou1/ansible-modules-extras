@@ -41,14 +41,12 @@ options:
     required: true
     default: null
     aliases: ['vip', 'virtual']
-    choices: []
   virtual_server_ip:
     description:
       - The SLB virtual server IPv4 address.
     required: false
     default: null
     aliases: ['ip', 'address']
-    choices: []
   virtual_server_status:
     description:
       - The SLB virtual server status, such as enabled or disabled.

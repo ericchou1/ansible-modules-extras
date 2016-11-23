@@ -42,7 +42,6 @@ options:
     required: true
     default: null
     aliases: ['service', 'pool', 'group']
-    choices: []
   service_group_protocol:
     description:
       - The SLB service-group protocol of TCP or UDP.
@@ -64,8 +63,6 @@ options:
         specify the C(status:). See the examples below for details.
     required: false
     default: null
-    aliases: []
-    choices: []
   validate_certs:
     description:
       - If C(no), SSL certificates will not be validated. This should only be used
