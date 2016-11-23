@@ -26,27 +26,32 @@ DOCUMENTATION = '''
 ---
 module: a10_virtual_server
 version_added: 1.8
-short_description: Manage A10 Networks devices' virtual servers
+version_last_modified: 2.3
+short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices' virtual servers.
 description:
-    - Manage slb virtual server objects on A10 Networks devices via aXAPI
-author: "Mischa Peters (@mischapeters)"
+    - Manage SLB (Server Load Balancing) virtual server objects on A10 Networks devices via aXAPIv2.
+author: "Eric Chou (@ericchou) 2016, Mischa Peters (@mischapeters) 2014"
+notes:
+    - Requires A10 Networks aXAPI 2.1.
 extends_documentation_fragment: a10
 options:
   virtual_server:
     description:
-      - SLB virtual server name.
+      - The SLB (Server Load Balancing) virtual server name.
     required: true
     default: null
     aliases: ['vip', 'virtual']
+    choices: []
   virtual_server_ip:
     description:
-      - SLB virtual server IP address.
+      - The SLB virtual server IPv4 address.
     required: false
     default: null
     aliases: ['ip', 'address']
+    choices: []
   virtual_server_status:
     description:
-      - SLB virtual server status.
+      - The SLB virtual server status, such as enabled or disabled.
     required: false
     default: enable
     aliases: ['status']
@@ -58,7 +63,18 @@ options:
         specify the C(service_group:) as well as the C(status:). See the examples
         below for details. This parameter is required when C(state) is C(present).
     required: false
+  validate_certs:
+    description:
+      - If C(no), SSL certificates will not be validated. This should only be used
+        on personally controlled devices using self-signed certificates.
+    required: false
+    default: 'yes'
+    choices: ['yes', 'no']
 
+'''
+
+RETURN = '''
+#
 '''
 
 EXAMPLES = '''
@@ -248,7 +264,7 @@ def main():
     axapi_call(module, session_url + '&method=session.close')
     module.exit_json(changed=changed, content=result)
 
-# ansible module imports
+# standard ansible module imports
 import json
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import url_argument_spec

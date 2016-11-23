@@ -26,26 +26,29 @@ DOCUMENTATION = '''
 ---
 module: a10_server
 version_added: 1.8
-short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices
+version_last_modified: 2.3
+short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices' server object.
 description:
-    - Manage slb server objects on A10 Networks devices via aXAPI
-author: "Mischa Peters (@mischapeters)"
+    - Manage SLB (Server Load Balancer) server objects on A10 Networks devices via aXAPIv2.
+author: "Eric Chou (@ericchou) 2016, Mischa Peters (@mischapeters) 2014"
+notes:
+    - Requires A10 Networks aXAPI 2.1.
 extends_documentation_fragment: a10
 options:
   server_name:
     description:
-      - SLB server name.
+      - The SLB (Server Load Balancer) server name.
     required: true
     aliases: ['server']
   server_ip:
     description:
-      - SLB server IP address.
+      - The SLB server IPv4 address.
     required: false
     default: null
     aliases: ['ip', 'address']
   server_status:
     description:
-      - SLB virtual server status.
+      - The SLB virtual server status.
     required: false
     default: enabled
     aliases: ['status']
@@ -60,11 +63,23 @@ options:
     default: null
   state:
     description:
-      - Create, update or remove slb server.
+      - This is to specify the operation to create, update or remove SLB server.
     required: false
     default: present
     choices: ['present', 'absent']
+  validate_certs:
+    description:
+      - If C(no), SSL certificates will not be validated. This should only be used
+        on personally controlled devices using self-signed certificates.
+    required: false
+    version_added: 2.2
+    default: 'yes'
+    choices: ['yes', 'no']
 
+'''
+
+RETURN = '''
+#
 '''
 
 EXAMPLES = '''
@@ -260,5 +275,5 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import url_argument_spec
 from ansible.module_utils.a10 import axapi_call, a10_argument_spec, axapi_authenticate, axapi_failure, axapi_get_port_protocol, axapi_enabled_disabled
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
