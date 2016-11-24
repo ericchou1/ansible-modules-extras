@@ -26,7 +26,6 @@ DOCUMENTATION = '''
 ---
 module: a10_server
 version_added: 1.8
-version_last_modified: 2.3
 short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices' server object.
 description:
     - Manage SLB (Server Load Balancer) server objects on A10 Networks devices via aXAPIv2.
@@ -72,7 +71,7 @@ options:
       - If C(no), SSL certificates will not be validated. This should only be used
         on personally controlled devices using self-signed certificates.
     required: false
-    version_added: 2.2
+    version_added: 2.3
     default: 'yes'
     choices: ['yes', 'no']
 

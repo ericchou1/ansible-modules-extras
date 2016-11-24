@@ -26,7 +26,6 @@ DOCUMENTATION = '''
 ---
 module: a10_service_group
 version_added: 1.8
-version_last_modified: 2.3
 short_description: Manage A10 Networks AX/SoftAX/Thunder/vThunder devices' service groups.
 description:
     - Manage SLB (Server Load Balancing) service-group objects on A10 Networks devices via aXAPIv2.
